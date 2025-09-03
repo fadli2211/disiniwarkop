@@ -71,7 +71,7 @@
     <div class="row px-3 mt-4">
         <form action="{{ route('user.order.endOfOrder', $checkTransaction->uuid) }}" method="POST" class="p-0">
             @csrf
-            <button type="submit" class="col-12 btn btn-coffee flex-fill" @if($checkTransaction->status !== 2) disabled
+            <button type="submit" class="col-12 btn btn-coffee flex-fill" @if($checkTransaction->status != 2) disabled
                 @endif>
                 Pesanan Selesai
             </button>

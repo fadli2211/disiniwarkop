@@ -53,6 +53,9 @@ class OrderController extends Controller
         $checkTransaction = Order::where('table_code', $tableCode)->where('status', '!=', 3)->with('items')->first();
 
         if (!$checkTransaction) {
+            $table = Table::where('code', $tableCode)->first();
+            $table->status = 1;
+            $table->save();
             $order = Order::create([
                 'user_id'    => Auth::id() ?? null,
                 'name'       => $request->name,
