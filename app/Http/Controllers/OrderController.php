@@ -20,6 +20,12 @@ class OrderController extends Controller
 
     public function index()
     {
+        if (Auth::check()) {
+            if(Auth::user()->role == 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+        }
+
         $auth = Auth::check();
         $cart = session()->get('cart', []);
         $cartCount = count($cart);
@@ -44,7 +50,7 @@ class OrderController extends Controller
         $request->validate([
             'kode_meja' => 'required',
             'name'      => 'required',
-            'phone'     => 'required',
+            'phone'     => Auth::check() ? 'required' : 'nullable',
             'cart'      => 'required|array',
         ]);
 

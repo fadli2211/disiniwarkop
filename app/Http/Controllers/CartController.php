@@ -6,11 +6,17 @@ use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Table;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function index()
     {
+        if (Auth::check()) {
+            if(Auth::user()->role == 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+        }
         // Ambil data keranjang dari session
         $cart = session()->get('cart', []);
         $cartCount = count($cart);
@@ -169,6 +175,7 @@ class CartController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Kode meja valid dan berhasil digunakan.',
+                'table_number' => $table->number,
                 'table_code' => $table->code,
             ]);
         }

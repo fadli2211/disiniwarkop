@@ -56,6 +56,13 @@
                     <button class="add-to-cart" onclick="redeem(${item.menu_id})">Tukar</button>
                 </div>
             `);
+
+            let isAvailable = item.menu.is_available == 1;
+
+            if (!isAvailable) {
+                productCard.addClass('disabled');
+            }
+
             productList.append(productCard);
         });
     }

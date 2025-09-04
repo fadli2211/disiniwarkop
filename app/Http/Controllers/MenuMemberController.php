@@ -13,6 +13,10 @@ class MenuMemberController extends Controller
     public function index()
     {
         if (Auth::check()) {
+            if(Auth::user()->role == 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+
             $user = Auth::user();
 
             if (is_null($user->verified_at)) {

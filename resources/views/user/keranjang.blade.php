@@ -65,6 +65,9 @@
                         value="{{ Auth::check() ? Auth::user()->phone : ($checkTransaction ? $checkTransaction->phone : '') }}"
                         @if(Auth::check() || $checkTransaction) readonly @endif>
                 </div>
+                @if (!Auth::check())
+                    <small class="text-danger">Isi jika ingin mendapatkan struk secara online</small>
+                @endif
             </div>
 
             {{-- Kode Meja --}}
@@ -111,7 +114,7 @@
         </div>
     </div>
 </div>
-  
+
 <div class="cart-footer">
     <div class="footer-left">
         {{-- Checkbox "Semua" dihilangkan karena belum ada logika yang sesuai--}}
@@ -131,6 +134,7 @@
 <script>
     const cartBadge = $('.cart-badge');
     let cart = @json($cart) ?? null;
+    let authCheck = '{{ Auth::check() }}';
 
     function showSnackbar(message) {
         const snackbar = $('#snackbar');
@@ -236,7 +240,8 @@
                     if (Object.keys(cart).length > 0) {
                         $('#checkout-btn').prop('disabled', false);
                     }
-                    $('#kode_meja').val(result.table_code).prop('readonly', true);
+                    $('#kode_meja').val(`Meja No ${result.table_number}`).prop('readonly', true);
+
                     $('#reset-btn').show();
                     $('#check-btn').hide();
                 } else {
@@ -275,7 +280,14 @@
         const name = $('input[name="name"]').val();
         const phone = $('input[name="phone"]').val();
 
-        if ($.trim(kodeMeja) === '' || $.trim(name) === '' || $.trim(phone) === '') {
+        if (authCheck) {
+            if ($.trim(kodeMeja) === '' || $.trim(name) === '' || $.trim(phone) === '') {
+                showSnackbar('Mohon lengkapi semua detail pemesan.');
+                return;
+            }
+        }
+
+        if ($.trim(kodeMeja) === '' || $.trim(name) === '') {
             showSnackbar('Mohon lengkapi semua detail pemesan.');
             return;
         }

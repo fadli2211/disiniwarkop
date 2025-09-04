@@ -19,7 +19,7 @@
                         </a>
                     </li>
 
-                    <li class="pc-item">
+                    <li class="pc-item d-none">
                         <a href="{{ route('admin.user') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-user"></i></span>
                             <span class="pc-mtext">User</span>
