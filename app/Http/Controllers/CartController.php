@@ -34,7 +34,7 @@ class CartController extends Controller
             ->with('cart', $cart)
             ->with('cartCount', $cartCount)
             ->with('tableCode', $tableCode)
-            ->with('table', $table)
+            ->with('table', $table ?? null)
             ->with('checkTransaction', $checkTransaction);
     }
 
