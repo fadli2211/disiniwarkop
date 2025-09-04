@@ -73,12 +73,22 @@ function fetchOrders() {
 
 function renderOrders(orders) {
     $.each(orders, function (index, order) {
-        let orderStatusOptions = `
-            <option value="0" ${order.status == 0 ? 'selected' : ''}>Pending</option>
-            <option value="1" ${order.status == 1 ? 'selected' : ''}>Sedang Dibuat</option>
-            <option value="2" ${order.status == 2 ? 'selected' : ''}>Sudah Disajikan</option>
-            <option value="3" ${order.status == 3 ? 'selected' : ''}>Selesai</option>
-        `;
+        let orderStatusOptions = ``;
+        if (order.status == 3) {
+            orderStatusOptions = `
+                <div class="form-control">Selesai</div>
+            `;
+        } else {
+            orderStatusOptions = `
+            <select class="form-select status-select w-50" data-id="${order.id}">
+                <option value="0" ${order.status == 0 ? 'selected' : ''}>Pending</option>
+                <option value="1" ${order.status == 1 ? 'selected' : ''}>Sedang Dibuat</option>
+                <option value="2" ${order.status == 2 ? 'selected' : ''}>Sudah Disajikan</option>
+                <option value="3" ${order.status == 3 ? 'selected' : ''}>Selesai</option>
+            </select>
+            `;
+        }
+
 
         let orderItemsHtml = '';
         let totalOrderPrice = 0;
@@ -121,9 +131,7 @@ function renderOrders(orders) {
 
                         <p>
                             <b>Status:</b>
-                            <select class="form-select status-select w-50" data-id="${order.id}">
-                                ${orderStatusOptions}
-                            </select>
+                            ${orderStatusOptions}
                         </p>
 
                         <h6><b>Detail Pesanan:</b></h6>

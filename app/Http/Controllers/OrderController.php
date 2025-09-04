@@ -66,7 +66,7 @@ class OrderController extends Controller
                 'user_id'    => Auth::id() ?? null,
                 'name'       => $request->name,
                 'phone'      => $request->phone ?? null,
-                'table_code' => $request->kode_meja,
+                'table_code' => $tableCode,
                 'status'     => 0
             ]);
         } else {

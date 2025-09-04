@@ -8,7 +8,9 @@
     <div class="py-3 bg-light rounded mb-3">
         <p><b>Kode Pesanan:</b> {{ $checkTransaction->uuid }}</p>
         <p><b>Nama Pemesan:</b> {{ $checkTransaction->name }}</p>
+        @if ($checkTransaction->phone)
         <p><b>No. WhatsApp:</b> +62{{ $checkTransaction->phone }}</p>
+        @endif
         <p><b>No. Meja:</b> {{ $checkTransaction->table->number }}</p>
         <p><b>Status:</b>
             @if($checkTransaction->status == 0)

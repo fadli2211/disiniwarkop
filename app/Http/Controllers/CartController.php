@@ -25,11 +25,16 @@ class CartController extends Controller
 
         $checkTransaction = Order::where('table_code', $tableCode)->where('status', '!=', 3)->first();
 
+        if ($tableCode) {
+            $table = Table::where('code', $tableCode)->first();
+        }
+
         // Kirim data keranjang ke view
         return view('user.keranjang')
             ->with('cart', $cart)
             ->with('cartCount', $cartCount)
             ->with('tableCode', $tableCode)
+            ->with('table', $table)
             ->with('checkTransaction', $checkTransaction);
     }
 

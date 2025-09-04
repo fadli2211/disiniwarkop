@@ -76,7 +76,7 @@
                 <input type="text" id="kode_meja" name="kode_meja"
                     class="form-control form-control-lg"
                     placeholder="Contoh: M01"
-                    value="{{ $tableCode ?? '' }}" {{ $tableCode ? 'readonly' : '' }}>
+                    value="{{ 'Meja No ' . $table->number ?? '' }}" {{ 'Meja No ' . $table->number ? 'readonly' : '' }}>
                 <small class="text-danger d-none" id="code_error">*Kode tidak ditemukan</small>
                 <small class="text-success d-none" id="code_success">*Kode berhasil digunakan</small>
             </div>

@@ -30,22 +30,21 @@ class OrderController extends Controller
         ->whereDate('created_at', Carbon::now()->toDateString());
 
         // Filter berdasarkan nomor meja
-        if ($request->has('table_number_filter') && !empty($request->table_number_filter)) {
+        if ($request->filled('table_number_filter')) {
             $tableNumber = (int) $request->table_number_filter;
-            $query->whereHas('tableQr.table', function ($q) use ($tableNumber) {
+            $query->whereHas('table', function ($q) use ($tableNumber) {
                 $q->where('number', $tableNumber);
             });
         }
 
+
         // Filter nama pemesan
-        if ($request->has('orderer_name_filter') && !empty($request->orderer_name_filter)) {
+        if ($request->filled('orderer_name_filter')) {
             $query->where('name', 'like', '%' . $request->orderer_name_filter . '%');
         }
 
         // Filter berdasarkan status
-        if (empty($request->status_filter) && $request->status_filter !== '0') {
-            $query->where('status', '!=', 3);
-        } elseif ($request->has('status_filter') && $request->status_filter !== '') {
+        if ($request->filled('status_filter')) {
             $query->where('status', (int) $request->status_filter);
         }
 
